@@ -1,27 +1,15 @@
-
 import streamlit as st
 import pandas as pd
 import numpy as np
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 import matplotlib.pyplot as plt
 
-# Load your data (replace with your dataset)
-# For simplicity, we'll generate some random data similar to what you already have
+# Load your data from the CSV file
+# Replace 'expenses.data.csv' with the correct path to your file if needed
+data_6_years = pd.read_csv('expenses.data.csv')
 
-np.random.seed(42)
-months_6_years = pd.date_range(start="2018-01-01", periods=72, freq='M')
-
-expenses_6_years = np.random.normal(loc=2000, scale=200, size=len(months_6_years)) + np.linspace(0, 750, len(months_6_years))
-gdp_6_years = np.random.normal(loc=21000, scale=300, size=len(months_6_years))
-cpi_6_years = np.random.normal(loc=260, scale=5, size=len(months_6_years)) + np.linspace(0, 30, len(months_6_years))
-
-data_6_years = pd.DataFrame({
-    'Date': months_6_years,
-    'Monthly_Expenses': expenses_6_years,
-    'GDP': gdp_6_years,
-    'CPI': cpi_6_years
-})
-
+# Ensure 'Date' column is in datetime format and set as index
+data_6_years['Date'] = pd.to_datetime(data_6_years['Date'])
 data_6_years.set_index('Date', inplace=True)
 
 # ARIMAX model function
@@ -39,8 +27,8 @@ st.write("This app allows you to adjust GDP and CPI to see how they affect futur
 st.sidebar.header("Adjust External Variables")
 
 # Let the user adjust GDP and CPI for future forecast
-future_gdp = st.sidebar.slider('Future GDP', 20000, 25000, int(gdp_6_years[-1]))
-future_cpi = st.sidebar.slider('Future CPI', 250, 300, int(cpi_6_years[-1]))
+future_gdp = st.sidebar.slider('Future GDP', 20000, 25000, int(data_6_years['GDP'].iloc[-1]))
+future_cpi = st.sidebar.slider('Future CPI', 250, 300, int(data_6_years['CPI'].iloc[-1]))
 
 # Split the data into train and test
 train_size = int(len(data_6_years) * 0.8)
