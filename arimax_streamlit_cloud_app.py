@@ -20,7 +20,7 @@ def arimax_forecast(train_expenses, train_exog, test_exog, order=(1, 1, 1)):
     return forecast
 
 # Streamlit App layout
-st.title("ARIMAX Model for Expense Forecasting")
+st.title("ARIMAX Model for Expense Forecasting - Ryan Harvey")
 st.write("This app allows you to adjust GDP and CPI to see how they affect future expense forecasts.")
 
 # Sidebar for user input
