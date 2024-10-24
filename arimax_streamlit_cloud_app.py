@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 # Load your data from the CSV file
 # Replace 'expenses.data.csv' with the correct path to your file if needed
-data_6_years = pd.read_csv('expenses.data.csv')
+data_6_years = pd.read_csv('Expenses.Data.csv')
 
 # Ensure 'Date' column is in datetime format and set as index
 data_6_years['Date'] = pd.to_datetime(data_6_years['Date'])
